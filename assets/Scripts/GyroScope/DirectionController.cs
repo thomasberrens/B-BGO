@@ -3,21 +3,12 @@ using UnityEngine;
 
     public class DirectionController : MonoBehaviour
     {
-
         public float CurrentHeading { get; private set; }
         
         public CardinalDirection CurrentDirection { get; private set; }
-        
-        private void Start()
-        {
-            Input.location.Start();
-            
-            Input.gyro.enabled = true;
-            Input.compass.enabled = true;
-        }
 
         void Update(){
-            float heading = Input.compass.trueHeading;
+            float heading = DeviceManager.Instance.Compass.trueHeading;
             
             CurrentHeading = heading;
             
