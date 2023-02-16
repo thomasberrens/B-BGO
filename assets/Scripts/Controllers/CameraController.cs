@@ -17,6 +17,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(pivotPoint.transform.position, positionOffset, _compass.trueHeading);
+        transform.RotateAround(pivotPoint.transform.position, positionOffset, DeviceManager.Instance.Compass.trueHeading);
     }
 }
