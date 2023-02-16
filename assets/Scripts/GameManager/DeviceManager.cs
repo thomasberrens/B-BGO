@@ -24,6 +24,8 @@ public class DeviceManager {
         Compass = Input.compass;
         LocationService = Input.location;
         
+        
+        
         // Start the location service, this has to be called before enabling the compass.
         LocationService.Start();
         
