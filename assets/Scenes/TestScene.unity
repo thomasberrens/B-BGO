@@ -368,6 +368,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0683c07f6b663014fb268c4bd7999a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spoofLocation: 0
+  spoofLocationCoordinates: {x: 0, y: 0}
 --- !u!1 &1480663337
 GameObject:
   m_ObjectHideFlags: 0
