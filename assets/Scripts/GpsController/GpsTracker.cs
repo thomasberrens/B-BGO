@@ -6,80 +6,82 @@ using UnityEngine;
 
 public class GpsTracker : MonoBehaviour
 {
-    private LocationInfo previousLocation;
-    private LocationInfo currentLocation;
-    private Vector3 startLocation;
-    private Vector3 currentGameLocation;
+    private Vector3 startPosition;
+    private Vector3 startGPSLocation;
+    private Vector3 currentGPSLocation;
+
+    private LocationService locationService; 
     
-    private const double EarthRadius = 6371000; // meters
+    [SerializeField] private bool spoofLocation = false;
+    
+    // first latitude, then longitude
+    [SerializeField] private Vector2 spoofLocationCoordinates = new Vector2(0, 0);
 
-    void Start()
+    private void Start()
     {
+        // Get the object's starting position
+        startPosition = transform.position;
 
+        locationService = DeviceManager.Instance.LocationService;
+        
     }
 
     private bool initialized = false;
 
-    void Update()
+    private void Update()
     {
-        if (!initialized && DeviceManager.Instance.LocationService.status.Equals(LocationServiceStatus.Running))
+        bool isRunning = locationService.status == LocationServiceStatus.Running;
+        
+        if (!initialized && isRunning)
         {
+            Debug.Log("Initialized.");
+            startGPSLocation =  GetCartesianFromGPS(new Vector2(locationService.lastData.latitude, locationService.lastData.longitude));
             initialized = true;
             
-            startLocation = this.transform.position;
-            currentGameLocation = startLocation;
+            spoofLocationCoordinates.x = locationService.lastData.latitude;
+            spoofLocationCoordinates.y = locationService.lastData.longitude;
             
-            Debug.Log("init");
+            return;
+        } else if (!initialized) return;
+        
+        float latitude = locationService.lastData.latitude;
+        float longitude = locationService.lastData.longitude;
+        
+        if (spoofLocation)
+        {
+            latitude = spoofLocationCoordinates.x;
+            longitude = spoofLocationCoordinates.y;
+        }
+
+        
+        // Update the GPS location
+        if (isRunning)
+        {
+            Debug.Log("Updating location.");
+            currentGPSLocation = GetCartesianFromGPS(new Vector2(latitude, longitude));
+
+            // Calculate the offset between the GPS starting location and the current location
+            Vector3 locationOffset = currentGPSLocation - startGPSLocation;
+
+
+            Debug.Log("Offset to add: " + locationOffset.x + ", " + locationOffset.y + "," + locationOffset.z);
             
-            previousLocation = DeviceManager.Instance.LocationService.lastData;
-            currentLocation = previousLocation;
-        } else if(!initialized) return;
-        
-        previousLocation = currentLocation;
-        currentLocation = Input.location.lastData;
-        
-        Debug.Log("update");
-        
-        // Convert previous location to Cartesian coordinates
-        double previousLatRad = previousLocation.latitude * Mathf.Deg2Rad;
-        double previousLongRad = previousLocation.longitude * Mathf.Deg2Rad;
-        Vector3 previousLocationCartesian = GetCartesianFromGPS(previousLocation.latitude, previousLocation.longitude);
-            
-
-        // Convert current location to Cartesian coordinates
-        
-        double currentLatRad = currentLocation.latitude * Mathf.Deg2Rad;
-        double currentLongRad = currentLocation.longitude * Mathf.Deg2Rad;
-        Vector3 currentLocationCartesian = GetCartesianFromGPS(currentLocation.latitude, currentLocation.longitude);
-        // Calculate the direction vector
-        Vector3 direction = currentLocationCartesian - previousLocationCartesian;
-        direction.Normalize();
-        Vector3 transformPos = transform.position;
-        transformPos += direction;
-        
-        if(!Vector3.zero.Equals(direction)) 
-            Debug.Log("DIR: " + direction.x + "," + direction.y + "," + direction.z);
-        
-       
-
-        transform.position = transformPos;
-    }
-
-    private Vector3 GetCartesianFromGPS(double latitude, double longitude)
-    {
-        double latRad = latitude * Mathf.Deg2Rad;
-        double longRad = longitude * Mathf.Deg2Rad;
-
-        float x = (float)(EarthRadius * Math.Cos(latRad) * Math.Cos(longRad));
-        float y = (float)(EarthRadius * Math.Cos(latRad) * Math.Sin(longRad));
-        float z = (float)(EarthRadius * Math.Sin(latRad));
-
-        return new Vector3(x, z, y);
-    }
-
-    private double DegreesToRadians(double degrees)
-    {
-        return degrees * Math.PI / 180;
+            // Set the object's position to the starting position plus the location offset
+            transform.position = startPosition + locationOffset;
+        }
     }
     
+    private const float EarthRadius = 6371000f;
+
+    private Vector3 GetCartesianFromGPS(Vector2 gpsLocation)
+    {
+        float latitude = gpsLocation.x;
+        float longitude = gpsLocation.y;
+
+        float x = (EarthRadius + 0f) * Mathf.Cos(latitude * Mathf.Deg2Rad) * Mathf.Cos(longitude * Mathf.Deg2Rad);
+        float y = (EarthRadius + 0f) * Mathf.Cos(latitude * Mathf.Deg2Rad) * Mathf.Sin(longitude * Mathf.Deg2Rad);
+        float z = (EarthRadius + 0f) * Mathf.Sin(latitude * Mathf.Deg2Rad);
+
+        return new Vector3(x, 0, y);
+    }
 }
