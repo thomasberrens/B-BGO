@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 1359724403}
   - component: {fileID: 1359724407}
   - component: {fileID: 1359724408}
+  - component: {fileID: 1359724409}
   m_Layer: 0
   m_Name: GyroScope
   m_TagString: Untagged
@@ -343,9 +344,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5e2f07a74be474380df8b5c862cebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 1
-  drag: 1
 --- !u!114 &1359724408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359724401}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa3f981920a44bbb174a0f4d12fd822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1359724409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -354,9 +365,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1359724401}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa3f981920a44bbb174a0f4d12fd822, type: 3}
+  m_Script: {fileID: 11500000, guid: 0683c07f6b663014fb268c4bd7999a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spoofLocation: 0
+  spoofLocationCoordinates: {x: 0, y: 0}
 --- !u!1 &1480663337
 GameObject:
   m_ObjectHideFlags: 0
