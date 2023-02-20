@@ -6,19 +6,16 @@ using UnityEngine.Events;
 public class ClickableObject : MonoBehaviour {
     
     [SerializeField] private UnityEvent<GameObject> onMouseDown = new UnityEvent<GameObject>();
-
-    private Action<GameObject> onMouseExit;
-
-    private void Start()
-    {
-        
-    }
+    [SerializeField] private UnityEvent<GameObject> onMouseExit = new UnityEvent<GameObject>();
+    [SerializeField] private UnityEvent<GameObject> onMouseEnter = new UnityEvent<GameObject>();
+    [SerializeField] private UnityEvent<GameObject> onMouseUp = new UnityEvent<GameObject>();
+    [SerializeField] private UnityEvent<GameObject> onMouseOver = new UnityEvent<GameObject>();
 
     private void OnMouseDown()
     {
         // This code will be executed when the object is clicked
         Debug.Log("Object Clicked!");
-        onMouseDown.Invoke(gameObject);
+        onMouseDown?.Invoke(gameObject);
     }
 
     private void OnMouseExit()
@@ -31,15 +28,18 @@ public class ClickableObject : MonoBehaviour {
     private void OnMouseOver()
     {
         Debug.Log("Mouse Over");
+        onMouseOver?.Invoke(gameObject);
     }
     
     private void OnMouseEnter()
     {
         Debug.Log("Mouse Enter");
+        onMouseEnter?.Invoke(gameObject);
     }
 
     private void OnMouseUp()
     {
         Debug.Log("Mouse Up");
+        onMouseUp?.Invoke(gameObject);
     }
 }
