@@ -31,8 +31,6 @@ public class DeviceManager {
         Compass.enabled = true;
         
         Debug.Log("Device Manager Initialized");
-        
-        
     }
     
     

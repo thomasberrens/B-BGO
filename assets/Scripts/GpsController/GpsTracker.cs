@@ -84,4 +84,9 @@ public class GpsTracker : MonoBehaviour
 
         return new Vector3(x, 0, y);
     }
+
+    private void PascalCaseFunction(int camelCase)
+    {
+        
+    }
 }
