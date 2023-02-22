@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Threading.Tasks;
+using UnityEngine;
 
 public class DeviceManager {
         
@@ -17,7 +20,16 @@ public class DeviceManager {
     
     public LocationService LocationService { get; private set; }
     
+    public LocationServiceStatus CurrentStatus { get; private set; }
+
+    public event Action<LocationServiceStatus> OnLocationStatusChanged;
+    
     private DeviceManager()
+    {
+
+    }
+
+    public void Initialize()
     {
         Gyroscope = Input.gyro;
         Compass = Input.compass;
@@ -28,8 +40,29 @@ public class DeviceManager {
         
         Gyroscope.enabled = true;
         Compass.enabled = true;
-        
+
         Debug.Log("Device Manager Initialized");
+
+        GameManager.Instance.StartCoroutine(CheckForLocationServiceStatus());
+    }
+
+    private IEnumerator CheckForLocationServiceStatus()
+    {
+        while (true)
+        {
+            if (LocationService.status == CurrentStatus)
+            {
+                Debug.Log("Status: " + LocationService.status);
+                yield return null;
+                continue;
+            }
+
+            CurrentStatus = LocationService.status;
+            OnLocationStatusChanged?.Invoke(CurrentStatus);
+            yield return null;
+        }
+
+        yield return null;
     }
     
     
