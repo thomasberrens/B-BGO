@@ -9,4 +9,5 @@ public class Minigame : ScriptableObject
    [field: SerializeField] public double Longitude { get; set; }
    [field: SerializeField] public double Latitude { get; set; }
    [field: SerializeField] public string SceneName { get; set; }
+   [field: SerializeField] public float Radius { get; set; }
 }

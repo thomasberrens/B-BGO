@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MinigameManager : MonoBehaviour{ 
@@ -13,6 +14,23 @@ public class MinigameManager : MonoBehaviour{
               // TODO: this only works because the game is single player. If we want to support multiplayer, we need to move this to a different place.
               // in that case we should assign a minigame manager to each player.
               GameManager.Instance.Player.GpsTracker.OnInitialized += Initialize;
+       }
+
+       private void Update()
+       {
+              foreach (var (gameObject, miniGame) in miniGames)
+              {
+                    Vector3 miniGamePosition = gameObject.transform.position;
+                    
+                    // TODO: keep in mind that the GPS has a accuracy of 10-15 meters, so we should probably use that as a radius (with a small offset).
+                    float distance = Vector3.Distance(GameManager.Instance.Player.transform.position, miniGamePosition);
+                       
+                    if (distance < miniGame.Radius) {
+                           Debug.Log("Player has entered the radius of minigame: " + miniGame.Name);
+                           
+                           // TODO: trigger the minigame
+                    }
+              }
        }
 
        private void Initialize()
