@@ -23,11 +23,6 @@ public class DeviceManager {
     public LocationServiceStatus CurrentStatus { get; private set; }
 
     public event Action<LocationServiceStatus> OnLocationStatusChanged;
-    
-    private DeviceManager()
-    {
-
-    }
 
     public void Initialize()
     {
@@ -52,7 +47,7 @@ public class DeviceManager {
         {
             if (LocationService.status == CurrentStatus)
             {
-                Debug.Log("Status: " + LocationService.status);
+                // yield return null is necessary to not freeze the game thread
                 yield return null;
                 continue;
             }
@@ -61,8 +56,6 @@ public class DeviceManager {
             OnLocationStatusChanged?.Invoke(CurrentStatus);
             yield return null;
         }
-
-        yield return null;
     }
     
     

@@ -4,9 +4,10 @@ using UnityEngine.Serialization;
 
 public class GpsTracker : MonoBehaviour
 {
-    public Vector3 StartPosition;
-    public Vector3 StartGPSLocation;
-    public Vector3 CurrentGPSLocation;
+    // TODO: these are serialized pure for debugging purposes. Remove them later.
+   [field: SerializeField] public Vector3 StartPosition { get; set; }
+   [field: SerializeField] public Vector3 StartGPSLocation { get; set; }
+   [field: SerializeField] public Vector3 CurrentGPSLocation { get; set; }
 
     private LocationService locationService;
     private bool initialized = false;
@@ -18,7 +19,7 @@ public class GpsTracker : MonoBehaviour
     
     public event Action OnInitialized;
 
-    private void Awake()
+    private void Start()
     {
         // Get the object's starting position
         StartPosition = transform.position;
@@ -31,25 +32,20 @@ public class GpsTracker : MonoBehaviour
     
     private void OnLocationStatusChanged(LocationServiceStatus status)
     {
-        if (status == LocationServiceStatus.Running)
-        {
-            Initialize();
-        }
+        if (status == LocationServiceStatus.Running) Initialize();
     }
 
     private void Initialize()
     {
-        Debug.Log("Initialized.");
         StartGPSLocation =  LocationUtil.GetCartesianFromGPS(new Vector2(locationService.lastData.latitude, locationService.lastData.longitude));
         
-            
         spoofLocationCoordinates.x = locationService.lastData.latitude;
         spoofLocationCoordinates.y = locationService.lastData.longitude;
         
         initialized = true;
-        
-        
+
         OnInitialized?.Invoke();
+        Debug.Log("Initialized GPS tracker.");
     }
 
     private void Update()
@@ -70,7 +66,6 @@ public class GpsTracker : MonoBehaviour
         // Update the GPS location
         if (isRunning)
         {
-            Debug.Log("Updating location.");
             CurrentGPSLocation = LocationUtil.GetCartesianFromGPS(new Vector2(latitude, longitude));
 
             // Calculate the offset between the GPS starting location and the current location

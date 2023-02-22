@@ -9,11 +9,11 @@ public class SerializableDictionaryEditor : Editor
     {
         MinigameManager miniGameManager = (MinigameManager)target;
 
-        var dictionary = new Dictionary<GameObject, Minigame>(miniGameManager.GetMiniGames());
+        Dictionary<GameObject, Minigame> minigamesCopy = new Dictionary<GameObject, Minigame>(miniGameManager.GetMiniGames());
 
         EditorGUI.BeginChangeCheck();
 
-        foreach (var pair in dictionary)
+        foreach (var pair in minigamesCopy)
         {
             EditorGUILayout.BeginHorizontal();
 
@@ -48,7 +48,8 @@ public class SerializableDictionaryEditor : Editor
 
         if (GUILayout.Button("Add item"))
         {
-            miniGameManager.GetMiniGames().Add(CreateMiniGameCube(), CreateInstance<Minigame>());
+            // it is necessary to create a new object here, because unity doesn't accept a gameobject that is null.
+            miniGameManager.GetMiniGames().Add(CreateMiniGameCube(), null);
         }
 
         if (EditorGUI.EndChangeCheck())

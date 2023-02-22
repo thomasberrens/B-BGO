@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class MinigameManager : MonoBehaviour{ 
        [SerializeField] private SerializableDictionary<GameObject, Minigame> miniGames = new SerializableDictionary<GameObject, Minigame>();
@@ -26,8 +24,6 @@ public class MinigameManager : MonoBehaviour{
               {
                      GameObject gameObject = entrySet.Key;
                      Minigame minigame = entrySet.Value;
-                     
-                     Debug.Log("Key: " + gameObject.name + " Value: " + minigame.name);
 
                      double longitude = minigame.Longitude;
                      double latitude = minigame.Latitude;

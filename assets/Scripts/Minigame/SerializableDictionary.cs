@@ -28,9 +28,8 @@ public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IS
         this.Clear();
 
         if (keys.Count != values.Count)
-        {
             throw new Exception(string.Format("Number of keys ({0}) and values ({1}) doesn't match", keys.Count, values.Count));
-        }
+        
 
         for (int i = 0; i < keys.Count; i++)
         {

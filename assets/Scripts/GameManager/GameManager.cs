@@ -17,42 +17,25 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         InitializeSingleton();
+    }
+
+    private void Start()
+    {
 
         DeviceManager.Instance.OnLocationStatusChanged += OnLocationStatusChanged;
         
         preInitialize += DeviceManager.Instance.Initialize;
 
         preInitialize?.Invoke();
-        
-        Debug.Log("STARTING HIHIHIHIHIH");
-        Input.location.Start();
     }
 
     private void OnLocationStatusChanged(LocationServiceStatus status)
     {
-        Debug.Log("Location Service Status: " + status);
-
-        if (status == LocationServiceStatus.Running)
-        {
-            Debug.Log("UP AND RUNNING");
-        }
-
         if (status == LocationServiceStatus.Stopped)
         {
             Debug.Log("LocationService is disabled, unfortunately we have to stop the game.");
             stopGame?.Invoke();
         }
-
-    }
-
-    void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-        Debug.Log("Location status: " + Input.location.status);
     }
 
     private void InitializeSingleton()

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb711abb3564b73ae73a2aa8e181edb, type: 3}
   m_Name: HideAndSeek
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: 
-  <Longitude>k__BackingField: 23784817.3191
-  <Latitude>k__BackingField: 0
+  <Name>k__BackingField: Hide And Seek
+  <Longitude>k__BackingField: 4.854622672213855
+  <Latitude>k__BackingField: 52.39295676051338
   <SceneName>k__BackingField: 
