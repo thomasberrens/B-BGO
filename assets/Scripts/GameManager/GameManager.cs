@@ -2,13 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = System.Object;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public event Action preInitialize;
+    public event Action initialized;
+    public event Action startGame;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        initializeSingleton();
+        
+        preInitialize?.Invoke();
+    }
+
+
     void Start()
+    {
+
+    }
+
+    private void initializeSingleton()
     {
         if (Instance == null)
         {

@@ -17,7 +17,6 @@ public class DeviceManager {
     
     public LocationService LocationService { get; private set; }
     
-
     private DeviceManager()
     {
         Gyroscope = Input.gyro;
@@ -32,6 +31,7 @@ public class DeviceManager {
         
         Debug.Log("Device Manager Initialized");
     }
+    
     
     
 
