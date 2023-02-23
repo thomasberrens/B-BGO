@@ -15,4 +15,5 @@ MonoBehaviour:
   <Name>k__BackingField: Hide And Seek
   <Longitude>k__BackingField: 4.854622672213855
   <Latitude>k__BackingField: 52.39295676051338
-  <SceneName>k__BackingField: 
+  <SceneName>k__BackingField: HideAndSeek
+  <TriggerRadius>k__BackingField: 0
