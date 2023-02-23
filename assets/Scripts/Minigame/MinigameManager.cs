@@ -25,7 +25,7 @@ public class MinigameManager : MonoBehaviour{
                     // TODO: keep in mind that the GPS has a accuracy of 10-15 meters, so we should probably use that as a radius (with a small offset).
                     float distance = Vector3.Distance(GameManager.Instance.Player.transform.position, miniGamePosition);
                        
-                    if (distance < miniGame.Radius) {
+                    if (distance < miniGame.TriggerRadius) {
                            Debug.Log("Player has entered the radius of minigame: " + miniGame.Name);
                            
                            // TODO: trigger the minigame
