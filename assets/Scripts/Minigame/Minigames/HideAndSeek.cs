@@ -27,10 +27,8 @@ public class HideAndSeek : MonoBehaviour{
        
        if (foundCharacters >= CharactersToFind.Count)
        {
+           // TODO: trigger on minigame win event
            Debug.Log("Game won.");
        }
-
-       
-
     }
 }
