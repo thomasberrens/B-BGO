@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     {
 
         DeviceManager.Instance.OnLocationStatusChanged += OnLocationStatusChanged;
-        
+
         preInitialize += DeviceManager.Instance.Initialize;
 
         preInitialize?.Invoke();
