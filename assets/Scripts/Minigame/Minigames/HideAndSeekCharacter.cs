@@ -8,15 +8,10 @@
     {
         [field: SerializeField] public Image CharacterImage { get; private set; }
 
-        public event Action<GameObject, Image> foundCharacter; 
-
-        private void Awake()
-        {
-        }
+        public event Action<GameObject, Image> foundCharacter;
 
         public void FoundObject(GameObject gameObject)
         {
-            Debug.Log("FOUND");
             foundCharacter?.Invoke(gameObject, CharacterImage);
         }
     }
