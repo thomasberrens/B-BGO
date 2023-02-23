@@ -4,9 +4,11 @@ using UnityEngine.UI;
 public class AudioHandler : MonoBehaviour
 {
     [SerializeField] private Slider slider;
-    
+    [SerializeField] private AudioManager audioManager
+ 
     private void Start()
     {
+        
         slider.value = AudioManager.volume;
     }
     
