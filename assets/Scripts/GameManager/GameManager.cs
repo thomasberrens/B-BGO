@@ -7,6 +7,7 @@ using Object = System.Object;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    [field: SerializeField] public SoundManager SoundManager {get; private set; }
     public event Action preInitialize;
     public event Action initialized;
     public event Action startGame;
