@@ -7,7 +7,20 @@ using UnityEngine;
         
         public CardinalDirection CurrentDirection { get; private set; }
 
+        private bool initialized = false;
+        
+        
+        private void Start()
+        {
+            DeviceManager.Instance.OnLocationStatusChanged += OnLocationStatusChanged;
+        }
+        
+        private void OnLocationStatusChanged(LocationServiceStatus status) => initialized = status == LocationServiceStatus.Running;
+        
         void Update(){
+
+            if (!initialized) return;
+
             float heading = DeviceManager.Instance.Compass.trueHeading;
             
             CurrentHeading = heading;
