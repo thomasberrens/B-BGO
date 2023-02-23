@@ -4,11 +4,9 @@ using UnityEngine.UI;
 public class AudioHandler : MonoBehaviour
 {
     [SerializeField] private Slider slider;
-    [SerializeField] private AudioManager audioManager
- 
+
     private void Start()
     {
-        
         slider.value = AudioManager.volume;
     }
     
@@ -26,10 +24,10 @@ public static class AudioManager
     static AudioManager()
     {
         // Set the initial volume for all AudioSources in the scene
-        foreach (var audioSource in FindObjectsOfType<AudioManager>())
+        /*foreach (var audioSource in FindObjectsOfType<AudioManager>())
         {
             audioSource.volume = volume;
-        }
+        }*/
     }
 }
 
