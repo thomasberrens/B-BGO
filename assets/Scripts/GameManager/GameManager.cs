@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         InitializeSingleton();
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()

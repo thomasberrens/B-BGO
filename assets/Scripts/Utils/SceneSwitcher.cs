@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> staticObjects = new List<GameObject>();
     public void SwitchScene(string sceneName) {
-        staticObjects.ForEach(staticObject => DontDestroyOnLoad(staticObject));
+        DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene(sceneName);
     }
 }
