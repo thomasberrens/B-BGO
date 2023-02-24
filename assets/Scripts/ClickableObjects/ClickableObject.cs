@@ -10,8 +10,14 @@ public class ClickableObject : MonoBehaviour {
     [SerializeField] private UnityEvent<GameObject> onMouseEnter = new UnityEvent<GameObject>();
     [SerializeField] private UnityEvent<GameObject> onMouseUp = new UnityEvent<GameObject>();
     [SerializeField] private UnityEvent<GameObject> onMouseOver = new UnityEvent<GameObject>();
+    [SerializeField] private ScoreSystem scoreSystem;
     
-    private void OnMouseDown() => onMouseDown?.Invoke(gameObject);
+    private void OnMouseDown() 
+    {
+        scoreSystem.ReceivedClick(gameObject);
+        onMouseDown?.Invoke(gameObject); 
+    }
+    
     private void OnMouseExit() => onMouseExit?.Invoke(gameObject);
     private void OnMouseOver() => onMouseOver?.Invoke(gameObject);
     private void OnMouseEnter() => onMouseEnter?.Invoke(gameObject);
