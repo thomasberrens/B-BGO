@@ -1,51 +1,59 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GpsTracker : MonoBehaviour
 {
-    private Vector3 startPosition;
-    private Vector3 startGPSLocation;
-    private Vector3 currentGPSLocation;
+    // TODO: these are serialized pure for debugging purposes. Remove them later.
+   [field: SerializeField] public Vector3 StartPosition { get; set; }
+   [field: SerializeField] public Vector3 StartGPSLocation { get; set; }
+   [field: SerializeField] public Vector3 CurrentGPSLocation { get; set; }
 
-    private LocationService locationService; 
-    
-    private const float earthRadius = 6371000f;
-    
+    private LocationService locationService;
     private bool initialized = false;
     
     [SerializeField] private bool spoofLocation = false;
     
-    // first latitude, then longitude
+    // X = latitude, Z = longitude
     [SerializeField] private Vector2 spoofLocationCoordinates = new Vector2(0, 0);
+    
+    public event Action OnInitialized;
 
     private void Start()
     {
         // Get the object's starting position
-        startPosition = transform.position;
+        StartPosition = transform.position;
+        
+        DeviceManager.Instance.OnLocationStatusChanged += OnLocationStatusChanged;
 
         locationService = DeviceManager.Instance.LocationService;
         
     }
+    
+    private void OnLocationStatusChanged(LocationServiceStatus status)
+    {
+        if (status == LocationServiceStatus.Running) Initialize();
+    }
+
+    private void Initialize()
+    {
+        StartGPSLocation =  LocationUtil.GetCartesianFromGPS(new Vector2(locationService.lastData.latitude, locationService.lastData.longitude));
+        
+        spoofLocationCoordinates.x = locationService.lastData.latitude;
+        spoofLocationCoordinates.y = locationService.lastData.longitude;
+        
+        initialized = true;
+
+        OnInitialized?.Invoke();
+        Debug.Log("Initialized GPS tracker.");
+    }
 
     private void Update()
     {
-        bool isRunning = locationService.status == LocationServiceStatus.Running;
-        
-        if (!initialized && isRunning)
-        {
-            Debug.Log("Initialized.");
-            startGPSLocation =  GetCartesianFromGPS(new Vector2(locationService.lastData.latitude, locationService.lastData.longitude));
-            initialized = true;
-            
-            spoofLocationCoordinates.x = locationService.lastData.latitude;
-            spoofLocationCoordinates.y = locationService.lastData.longitude;
-            
-            return;
-        } else if (!initialized) return;
-        
+        bool isRunning = DeviceManager.Instance.CurrentStatus == LocationServiceStatus.Running;
+
+        if (!initialized) return;
+
         float latitude = locationService.lastData.latitude;
         float longitude = locationService.lastData.longitude;
         
@@ -58,30 +66,15 @@ public class GpsTracker : MonoBehaviour
         // Update the GPS location
         if (isRunning)
         {
-            Debug.Log("Updating location.");
-            currentGPSLocation = GetCartesianFromGPS(new Vector2(latitude, longitude));
+            CurrentGPSLocation = LocationUtil.GetCartesianFromGPS(new Vector2(latitude, longitude));
 
             // Calculate the offset between the GPS starting location and the current location
-            Vector3 locationOffset = currentGPSLocation - startGPSLocation;
-
+            Vector3 locationOffset = LocationUtil.CalculateCartesianOffset(StartPosition, StartGPSLocation, CurrentGPSLocation);
 
             Debug.Log("Offset to add: " + locationOffset.x + ", " + locationOffset.y + "," + locationOffset.z);
             
             // Set the object's position to the starting position plus the location offset
-            transform.position = startPosition + locationOffset;
+            transform.position = locationOffset;
         }
-    }
-    
-    
-
-    private Vector3 GetCartesianFromGPS(Vector2 gpsLocation)
-    {
-        float latitude = gpsLocation.x;
-        float longitude = gpsLocation.y;
-
-        float x = (earthRadius + 0f) * Mathf.Cos(latitude * Mathf.Deg2Rad) * Mathf.Cos(longitude * Mathf.Deg2Rad);
-        float y = (earthRadius + 0f) * Mathf.Cos(latitude * Mathf.Deg2Rad) * Mathf.Sin(longitude * Mathf.Deg2Rad);
-
-        return new Vector3(x, 0, y);
     }
 }

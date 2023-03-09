@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afcc1f6db7cc481eb271d90763fc50fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onMouseDown:
+  <OnClickDown>k__BackingField:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11500000, guid: e8a4aabcaaee4b44486f5d8c1b6f382f, type: 3}
@@ -256,16 +256,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onMouseExit:
+  <OnExit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  onMouseEnter:
+  <OnEnter>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  onMouseUp:
+  <OnClickUp>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  onMouseOver:
+  <OnHover>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &909351223

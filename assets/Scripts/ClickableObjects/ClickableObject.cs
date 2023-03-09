@@ -4,22 +4,15 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 public class ClickableObject : MonoBehaviour {
-    
-    [SerializeField] private UnityEvent<GameObject> onMouseDown = new UnityEvent<GameObject>();
-    [SerializeField] private UnityEvent<GameObject> onMouseExit = new UnityEvent<GameObject>();
-    [SerializeField] private UnityEvent<GameObject> onMouseEnter = new UnityEvent<GameObject>();
-    [SerializeField] private UnityEvent<GameObject> onMouseUp = new UnityEvent<GameObject>();
-    [SerializeField] private UnityEvent<GameObject> onMouseOver = new UnityEvent<GameObject>();
-    [SerializeField] private ScoreSystem scoreSystem;
-    
-    private void OnMouseDown() 
-    {
-        scoreSystem.ReceivedClick(gameObject);
-        onMouseDown?.Invoke(gameObject); 
-    }
-    
-    private void OnMouseExit() => onMouseExit?.Invoke(gameObject);
-    private void OnMouseOver() => onMouseOver?.Invoke(gameObject);
-    private void OnMouseEnter() => onMouseEnter?.Invoke(gameObject);
-    private void OnMouseUp() => onMouseUp?.Invoke(gameObject);
+    [field: SerializeField] public UnityEvent<GameObject> OnClickDown { get; set; }
+    [field: SerializeField] public UnityEvent<GameObject> OnExit { get; set; }
+    [field: SerializeField] public UnityEvent<GameObject> OnEnter { get; set; }
+    [field: SerializeField] public UnityEvent<GameObject> OnClickUp { get; set; }
+    [field: SerializeField] public UnityEvent<GameObject> OnHover { get; set; }
+
+    private void OnMouseDown() => OnClickDown?.Invoke(gameObject);
+    private void OnMouseExit() => OnExit?.Invoke(gameObject);
+    private void OnMouseOver() => OnHover?.Invoke(gameObject);
+    private void OnMouseEnter() => OnEnter?.Invoke(gameObject);
+    private void OnMouseUp() => OnClickUp?.Invoke(gameObject);
 }
