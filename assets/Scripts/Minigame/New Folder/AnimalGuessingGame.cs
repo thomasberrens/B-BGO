@@ -9,7 +9,11 @@ using Random = UnityEngine.Random;
 public class AnimalGuessingGame : MonoBehaviour
 {
     [SerializeField] TMP_Text promptText;
-    [SerializeField] private List<Button> buttonList = new List<Button>();
+    [SerializeField] private Button buttonA;
+    [SerializeField] private Button buttonB;
+    [SerializeField] private Button buttonC;
+    [SerializeField] private Button buttonD;
+    [SerializeField] private Button buttonE;
     [SerializeField] private List<AudioClip> animalSounds = new List<AudioClip>();
     
     private readonly List<string> _animalArray = new List<string>(){"Eekhoorn", "Egel", "Vogel", "Muis", "Konijn"};
@@ -26,20 +30,18 @@ public class AnimalGuessingGame : MonoBehaviour
         
         GenerateNextAnswser();
         // Set the button labels to display the animal options
-        for (int i = 0; i < _animalArray.Count - 1; i++)
-        {
-            buttonList[i].GetComponentInChildren<TMP_Text>().text = _animalArray[i]; 
-            buttonList[0].onClick.AddListener(() => CheckAnswer(_animalArray[i], _randomAnimal));
-        }
-        buttonList[0].GetComponentInChildren<TMP_Text>().text = _animalArray[0];
-        buttonList[1].GetComponentInChildren<TMP_Text>().text = _animalArray[1];
-        buttonList[2].GetComponentInChildren<TMP_Text>().text = _animalArray[2];
-
+        buttonA.GetComponentInChildren<TMP_Text>().text = _animalArray[0];
+        buttonB.GetComponentInChildren<TMP_Text>().text = _animalArray[1];
+        buttonC.GetComponentInChildren<TMP_Text>().text = _animalArray[2];
+        buttonD.GetComponentInChildren<TMP_Text>().text = _animalArray[3];
+        buttonE.GetComponentInChildren<TMP_Text>().text = _animalArray[4];
 
         // Set the click listeners to call the CheckAnswer function with the appropriate animal option
-        buttonList[0].onClick.AddListener(() => CheckAnswer(_animalArray[0], _randomAnimal));
-        buttonList[0].onClick.AddListener(() => CheckAnswer(_animalArray[1], _randomAnimal));
-        buttonList[0].onClick.AddListener(() => CheckAnswer(_animalArray[2], _randomAnimal));
+        buttonA.onClick.AddListener(() => CheckAnswer(_animalArray[0], _randomAnimal));
+        buttonB.onClick.AddListener(() => CheckAnswer(_animalArray[1], _randomAnimal));
+        buttonC.onClick.AddListener(() => CheckAnswer(_animalArray[2], _randomAnimal));
+        buttonD.onClick.AddListener(() => CheckAnswer(_animalArray[3], _randomAnimal));
+        buttonE.onClick.AddListener(() => CheckAnswer(_animalArray[4], _randomAnimal));
     }
 
     void GenerateNextAnswser()
