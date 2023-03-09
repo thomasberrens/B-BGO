@@ -8,7 +8,6 @@ public class RotateAroundPoint : MonoBehaviour
     [SerializeField] private GameObject _pivotPoint;
     private Compass _compass;
     [SerializeField] private Vector3 _positionOffset = new Vector3(0,1,0);
-    
     // Start is called before the first frame update
     void Start()
     {
