@@ -103,4 +103,9 @@ public class AnimalGuessingGame : MonoBehaviour
         promptText.text = "Goedzo! Je hebt alle dieren geraden";
         Debug.Log("finished");
     }
+
+    public void PlaySoundAgain()
+    {
+        _audioSource.Play();
+    }
 }
