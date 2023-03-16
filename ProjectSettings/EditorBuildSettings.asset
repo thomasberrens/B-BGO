@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/MinigameScene.unity
     guid: b5706e68a4508624d8ad7d15710b39ad
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/Menus/Menu.unity
     guid: 2874efa941db74946a25aebb123d9ba0
   - enabled: 1
-    path: Assets/Scenes/Settings.unity
+    path: Assets/Scenes/Menus/Settings.unity
     guid: c0587f233faaa984f8b287e823c98e10
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Minigames/HideAndSeek.unity
     guid: d396a383dcf93b8419890e06c1638c0d
+  - enabled: 1
+    path: Assets/Scenes/Menus/Credits.unity
+    guid: 64c369edc47e3f4479dc8439947359e9
   m_configObjects: {}
