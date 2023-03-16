@@ -13,7 +13,7 @@ using UnityEngine;
 public class GoogleMapsInitializer : MonoBehaviour
 {
     [field: SerializeField] private LatLng LatLng { get; set; }
-    [field: SerializeField] private GameObject treePrefab { get; set; }
+    //[field: SerializeField] private GameObject treePrefab { get; set; }
     
     
     // Start is called before the first frame update
@@ -31,12 +31,12 @@ public class GoogleMapsInitializer : MonoBehaviour
         mapsService.Events.ExtrudedStructureEvents.WillCreate.AddListener(WillCreateExtrudedStructure);
         
         mapsService.Events.SegmentEvents.WillCreate.AddListener(BeforeCreateRoad);
-        mapsService.Events.SegmentEvents.DidCreate.AddListener(OnCreateRoad);
+     //   mapsService.Events.SegmentEvents.DidCreate.AddListener(OnCreateRoad);
 
         mapsService.Events.MapEvents.Loaded.AddListener(LoadedMap);
         
         // Load map with default options.
-        mapsService.LoadMap(ExampleDefaults.DefaultBounds, ExampleDefaults.DefaultGameObjectOptions);
+        mapsService.LoadMap(new Bounds(Vector3.zero, new Vector3(715, 0, 715)), ExampleDefaults.DefaultGameObjectOptions);
         
     }
 
@@ -54,48 +54,7 @@ public class GoogleMapsInitializer : MonoBehaviour
     {
      
     }
-
-    private void OnCreateRoad(DidCreateSegmentArgs args)
-    {
-        Vector2 origin = args.MapFeature.Shape.Origin;
-        
-        Bounds bounds = args.MapFeature.Shape.BoundingBox;
-        
-        // Calculate the minimum and maximum X and Z coordinates of the bounding box
-        float minX = bounds.min.x;
-        float maxX = bounds.max.x;
-        float minZ = bounds.min.z;
-        float maxZ = bounds.max.z;
-        
-        
-        // Calculate the distance from the center point to the edges of the bounding box
-        float leftDistance = origin.x - minX;
-        float rightDistance = maxX - origin.x;
-        float bottomDistance = origin.y - minZ;
-        float topDistance = maxZ - origin.y;
-
-        
-        Debug.Log("created origin: " + origin);
-
-        int treeCount = 3;
-
-        float treeOffset = 0.1f;
-        
-       List<Vector3> treePositions = new List<Vector3>();
-
-       Vector3 left = new Vector3(origin.x + leftDistance, 0,origin.y);
-       
-       treePositions.Add(left);
-      
-
-// Add tree objects to the scene
-        foreach (Vector3 position in treePositions) {
-            GameObject tree = Instantiate(treePrefab, position, Quaternion.identity);
-            tree.transform.SetParent(args.GameObject.transform);
-            
-        }
-
-    }
+    
     // Update is called once per frame
     void Update()
     {
