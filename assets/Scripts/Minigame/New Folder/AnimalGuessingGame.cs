@@ -16,7 +16,7 @@ public class AnimalGuessingGame : MonoBehaviour
     [SerializeField] private Button buttonE;
     [SerializeField] private List<AudioClip> animalSounds = new List<AudioClip>();
     
-    private readonly List<string> _animalArray = new List<string>(){"Eekhoorn", "Egel", "Vogel", "Muis", "Konijn"};
+    private readonly List<string> _animalArray = new List<string>(){"Eekhoorn", "Egel", "Roodborstje", "Muis", "Konijn"};
     private List<string> _temporaryAnimalArray = new List<string>();
     private AudioSource _audioSource;
     private string _correctAnimal;
@@ -82,7 +82,7 @@ public class AnimalGuessingGame : MonoBehaviour
     {
         if (guess == _correctAnimal)
         {
-            promptText.text = "Correct!";
+            promptText.text = "Je hebt het goed!\nRaad nu de volgende.";
             _audioSource.Stop();
             _temporaryAnimalArray.Remove(guess);
             animalSounds.RemoveAt(animalIndex);
@@ -93,15 +93,14 @@ public class AnimalGuessingGame : MonoBehaviour
         }
         else
         {
-            promptText.text = "Incorrect. Try again.";
+            promptText.text = "Fout. Probeer het opnieuw.";
             _audioSource.Play();
         }
     }
 
     void FinishGame()
     {
-        promptText.text = "Goedzo! Je hebt alle dieren geraden";
-        Debug.Log("finished");
+        promptText.text = "Je hebt alles goed!\nJe 2de code = 'G'";
     }
 
     public void PlaySoundAgain()
