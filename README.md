@@ -36,14 +36,14 @@ https://www.youtube.com/watch?v=gAXfkrqBIMo
 
 ![Animation](https://www.youtube.com/watch?v=gAXfkrqBIMo)
 
-## Sound Guessing minigame
+## Sound Guessing minigame by Jason Dikken
 
 A minigame where the player has to identify which sound is produced by a animal.
 
 ![example](https://www.youtube.com/watch?v=L1ahuUrn9r8e)
 
 
-## Hide And Seek minigame
+## Hide And Seek minigame by Thomas Berrens
 
 A minigame where the player has to find the animals in the environment.
 
